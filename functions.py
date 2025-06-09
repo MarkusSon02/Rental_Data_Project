@@ -21,13 +21,12 @@ def get_current_time() -> str:
 def upload_data(data: dict, location:str, bucket: str) -> None:
     """
     Uploads JSON data to S3 using a partitioned path:
-    s3://<bucket>/raw_data/rental_data/location=<location>/year=YYYY/month=MM/rental_data<location>_<now>.json
+    s3://<bucket>/raw_data/rental_data/location=<location>/rental_data<location>_<now>.json
     """
-    now, year, month = get_current_time()
     
     s3 = boto3.client("s3")
 
-    key = f"raw_data/rental_data/location={location}/year={year}/month={month}/rental_data_{location}_{now}.json"
+    key = f"raw_data/rental_data/location={location}/rental_data_{location}.json"
 
     s3.put_object(
         Bucket=bucket,
